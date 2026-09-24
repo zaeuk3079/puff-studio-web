@@ -456,58 +456,6 @@ export default function Home() {
         </section>
       )}
 
-      {/* Process Section in Home Page */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 my-28 pt-20 border-t border-white/10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          {/* Left Column: Process Title */}
-          <div className="lg:col-span-4 sticky top-32">
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight font-sans">
-              {settings.serviceProcessTitle || 'Process'}
-            </h2>
-            {settings.serviceSubText && (
-              <p className="text-stone-400 text-sm tracking-wide mt-4 whitespace-pre-line">
-                {settings.serviceSubText}
-              </p>
-            )}
-          </div>
-
-          {/* Right Column: Steps */}
-          <div className="lg:col-span-8 space-y-10">
-            {((settings.serviceProcessSteps && settings.serviceProcessSteps.length > 0)
-              ? settings.serviceProcessSteps
-              : [
-                  { id: '1', stepNumber: '01', title: '상담·기획', desc1: '24시간 안에 답장합니다.', desc2: '목적과 무드를 듣고 레퍼런스·세팅·견적을 제안합니다.', image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=600&auto=format&fit=crop' },
-                  { id: '2', stepNumber: '02', title: '촬영', desc1: '역삼 스튜디오 또는 로케이션.', desc2: '현장에서 컷을 함께 확인하며 진행합니다.', image: 'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?q=80&w=600&auto=format&fit=crop' },
-                  { id: '3', stepNumber: '03', title: '셀렉·리터칭', desc1: '정리된 컷에서 고르시면,', desc2: '피드백을 반영해 정성껏 보정합니다.', image: 'https://images.unsplash.com/photo-1554046920-90dcac0536d1?q=80&w=600&auto=format&fit=crop' },
-                  { id: '4', stepNumber: '04', title: '전달', desc1: '고해상도 완성본을 일정에 맞춰드립니다.', desc2: '', image: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=600&auto=format&fit=crop' }
-                ]).map((step, idx) => (
-              <div key={step.id || idx} className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-start justify-between gap-6 group">
-                <div className="flex items-start space-x-6 flex-1">
-                  <span className="text-xs font-mono font-bold text-lime-300 tracking-wider pt-1 shrink-0">
-                    {step.stepNumber || `0${idx + 1}`}
-                  </span>
-                  <div className="space-y-2">
-                    <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight font-sans">
-                      {step.title}
-                    </h3>
-                    <div className="text-sm text-stone-400 space-y-1 font-normal leading-relaxed">
-                      {step.desc1 && <p className="whitespace-pre-line">{step.desc1}</p>}
-                      {step.desc2 && <p className="text-stone-500 whitespace-pre-line">{step.desc2}</p>}
-                    </div>
-                  </div>
-                </div>
-                {step.image && (
-                  <div className="w-full sm:w-44 h-32 rounded-2xl overflow-hidden bg-white/5 shrink-0 border border-white/10 shadow-sm transition-transform duration-300 group-hover:scale-[1.02]">
-                    <img src={step.image} alt={step.title} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
-                  </div>
-                )}
-              </div>
-            ))}
-            <div className="border-t border-white/10 pt-4" />
-          </div>
-        </div>
-      </div>
-
       {/* Lightbox Modal */}
       <AnimatePresence>
         {selectedItem && (
