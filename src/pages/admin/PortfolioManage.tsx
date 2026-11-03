@@ -117,7 +117,7 @@ export default function PortfolioManage() {
     if (legacyBase64Items.length === 0) return;
     if (!window.confirm(
       `${legacyBase64Items.length}개의 대표 이미지가 아직 Firestore에 base64로 저장되어 있어 페이지 로딩을 느리게 만들고 있습니다. ` +
-      `지금 전부 CDN(imgbb)으로 이전할까요? 이전 중에는 이 탭을 닫지 마세요.`
+      `지금 전부 Firebase Storage로 이전할까요? 이전 중에는 이 탭을 닫지 마세요.`
     )) return;
 
     setIsMigrating(true);
@@ -359,7 +359,7 @@ export default function PortfolioManage() {
             className="shrink-0 bg-amber-600 hover:bg-amber-700 disabled:opacity-50 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center space-x-2"
           >
             {isMigrating && <Loader2 size={14} className="animate-spin" />}
-            <span>{isMigrating ? '이전 중...' : 'CDN으로 이전하기 (속도 개선)'}</span>
+            <span>{isMigrating ? '이전 중...' : 'Firebase Storage로 이전하기 (속도 개선)'}</span>
           </button>
         </div>
       )}
