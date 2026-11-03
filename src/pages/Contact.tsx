@@ -7,13 +7,13 @@ import { ContactPackage, ContactPolicyGroup } from '../store/CMSContext';
 const DEFAULT_PACKAGES: ContactPackage[] = [
   {
     id: 'starter',
-    name: '시작 패키지',
-    price: '590,000원',
+    name: 'AI 패키지',
+    price: '390,000',
     duration: '',
-    tagline: '빠른 오픈을 준비하는 1인 셀러를 위한 구성입니다.',
-    description: '제품 1종을 실촬영하고, 그 원본으로 AI 연출 이미지를 제작합니다.',
+    tagline: '빠른 오픈을 준비하는 1인 셀러를 위한 패키지',
+    description: '실제 촬영후, 고품질 원본으로 AI 연출 이미지를 제작합니다.\n신제품을 빠르게 런칭하고싶은 분\n브랜드 컨텐츠용 AI 이미지가 필요한 분\n(제품 수령일로부터 +5일 완성)',
     features: [
-      '실촬영 누끼·디테일컷 (제품에 필요한 만큼)',
+      '누끼·디테일컷 촬영',
       'AI 연출 이미지 (기획에 맞춰 제작)',
       '누끼 및 AI 이미지 +5일 이내 전달',
     ],
@@ -21,29 +21,25 @@ const DEFAULT_PACKAGES: ContactPackage[] = [
   },
   {
     id: 'halfday',
-    name: '하프데이',
-    price: '890,000원',
+    name: '4시간 촬영',
+    price: '590,000',
     duration: '4시간',
-    tagline: '컷 수 제한 없이, 연출 난이도에 따라 유동적으로 진행합니다.',
-    description: '대략적으로 연출 5~7컷, 누끼+연출 3~4컷 정도가 나옵니다.',
+    tagline: '4시간 동안 컨셉에 제한 없이 무제한 촬영합니다',
+    description: '상세페이지용 이미지가 필요하신 분\n상세페이지는 있고 소량의 SNS컨텐츠 및 광고소재가 필요하신 분',
     features: [
-      '촬영 시간 4시간',
-      '연출 난이도에 따라 완성 컷 수 조정',
-      '연출 약 5~7컷 · 누끼+연출 약 3~4컷',
+      '원본 JEPG 파일 전체 제공',
     ],
-    highlight: true,
+    highlight: false,
   },
   {
     id: 'fullday',
-    name: '풀데이',
-    price: '1,290,000원',
+    name: '8시간 촬영',
+    price: '890,000',
     duration: '9시간',
-    tagline: '컷 수 제한 없이, 넉넉한 시간으로 다양한 컨셉을 소화합니다.',
-    description: '대략적으로 연출 8~15컷, 누끼+연출 4~7컷 정도가 나옵니다.',
+    tagline: '9시간 동안 컨셉에 제한 없이 무제한 촬영합니다.\n(점심시간 1시간 포함)',
+    description: '상세페이지 및 SNS컨텐츠,  광고소재용 이미지가 필요하신 분\n상세페이지는 있고 대량의 SNS컨텐츠 및 광고소재용 이미지가 필요하신 분',
     features: [
-      '촬영 시간 9시간',
-      '연출 난이도에 따라 완성 컷 수 조정',
-      '연출 약 8~15컷 · 누끼+연출 약 4~7컷',
+      '원본 JEPG 파일 전체 제공',
     ],
     highlight: false,
   },
@@ -52,14 +48,14 @@ const DEFAULT_PACKAGES: ContactPackage[] = [
     name: '컷 당 촬영',
     price: '',
     duration: '',
-    tagline: '보정 포함 단가입니다.',
-    description: '패키지 없이 컷 단위로만 촬영이 필요할 때 이용해주세요.',
+    tagline: '어디에나 사용하기 좋은 누끼사진 촬영 (보정포함)',
+    description: 'AI 합성용 소스 및 디자인 소스로 누끼 이미지가 필요한 경우',
     features: [
       '일반 누끼컷 — 30,000원 (보정포함)',
       '(단상자,무광제품 등)',
       '반사체 누끼컷 — 50,000원 (보정포함)',
       '(거울,은박,유광 뚜껑 등)',
-      '제형·디테일컷 — 50,000원 (보정포함)',
+      'GIF 제작 — 50,000원 (편집포함)',
     ],
     highlight: false,
     featuresFirst: true,
@@ -219,7 +215,7 @@ export default function Contact() {
           className="mb-10"
         >
           {/* Package cards (4th card = 컷 당 촬영 단가표) */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:grid-rows-[auto_auto_auto_auto] gap-5 mb-6">
             {(settings.contactPackages && settings.contactPackages.length > 0 ? settings.contactPackages : DEFAULT_PACKAGES).map((pkg) => {
               const featuresList = (
                 <ul className="flex-1">
@@ -260,20 +256,26 @@ export default function Contact() {
               return (
                 <div
                   key={pkg.id}
-                  className={`p-6 rounded-2xl border flex flex-col ${
+                  className={`p-6 rounded-2xl border lg:grid lg:grid-rows-subgrid lg:row-span-4 ${
                     pkg.highlight
                       ? 'bg-lime-300/5 border-lime-300/40 shadow-lg shadow-lime-300/5'
                       : 'bg-white/5 border-white/10'
                   }`}
                 >
-                  {pkg.highlight && (
-                    <span className="self-start text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider bg-lime-300 text-ink-950 mb-3">
-                      추천
-                    </span>
-                  )}
-                  <h3 className="text-lg font-bold text-white">{pkg.name}</h3>
+                  {/* lg:grid-rows-subgrid lets this card's name/price/top-content/divider rows
+                      share height with the same rows in the other 3 cards, so the divider lands
+                      at the same vertical position regardless of how long each card's text is —
+                      no more guessing a fixed min-height that breaks whenever copy changes. */}
+                  <div className="lg:row-start-1">
+                    {pkg.highlight && (
+                      <span className="inline-flex text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider bg-lime-300 text-ink-950 mb-3">
+                        추천
+                      </span>
+                    )}
+                    <h3 className="text-lg font-bold text-white">{pkg.name}</h3>
+                  </div>
                   {(pkg.price || pkg.duration) && (
-                    <div className="mt-2 flex items-baseline gap-2 min-h-[28px]">
+                    <div className="lg:row-start-2 mt-2 flex items-baseline gap-2 min-h-[28px]">
                       {pkg.price && <span className="text-xl font-black gradient-accent-text">{pkg.price}</span>}
                       {pkg.duration && (
                         <span className="text-xs text-stone-400 flex items-center gap-1">
@@ -285,13 +287,13 @@ export default function Contact() {
                   )}
                   {pkg.featuresFirst ? (
                     <>
-                      <div className={pkg.price || pkg.duration ? 'mt-3 min-h-[92px]' : 'mt-2 min-h-[132px]'}>{featuresList}</div>
-                      <div className="mt-5 pt-5 border-t border-white/10">{taglineDescription}</div>
+                      <div className="lg:row-start-3 mt-3">{featuresList}</div>
+                      <div className="lg:row-start-4 mt-5 pt-5 border-t border-white/10">{taglineDescription}</div>
                     </>
                   ) : (
                     <>
-                      <div className={pkg.price || pkg.duration ? 'mt-3 min-h-[92px]' : 'mt-2 min-h-[132px]'}>{taglineDescription}</div>
-                      <div className="mt-5 pt-5 border-t border-white/10 flex-1 flex flex-col">{featuresList}</div>
+                      <div className="lg:row-start-3 mt-3">{taglineDescription}</div>
+                      <div className="lg:row-start-4 mt-5 pt-5 border-t border-white/10">{featuresList}</div>
                     </>
                   )}
                 </div>
