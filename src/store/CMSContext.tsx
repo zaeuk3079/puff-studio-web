@@ -94,7 +94,6 @@ export interface SiteSettings {
   heroTextAlign?: 'left' | 'center' | 'right' | string;
   heroNukiImages?: string[];
   heroNukiConfigs?: NukiImageConfig[];
-  showHomeAbout: boolean;
   homePortfolioTitle: string;
   homePortfolioTitleLetterSpacing?: number;
   homePortfolioTitleFontSize?: number;
@@ -251,7 +250,6 @@ const defaultSettings: SiteSettings = {
   heroTextAlign: 'left',
   heroNukiImages: [],
   heroNukiConfigs: [],
-  showHomeAbout: true,
   homePortfolioTitle: 'Work',
   homePortfolioTitleLetterSpacing: -1,
   homePortfolioTitleFontSize: 48,
