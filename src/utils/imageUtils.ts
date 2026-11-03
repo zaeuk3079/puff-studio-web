@@ -15,30 +15,20 @@ export const uploadImageToCloudCDN = async (file: File, maxDim = 2000, quality =
       console.warn('Pre-upload compression skipped, uploading original file:', compressErr);
     }
 
-    const formData = new FormData();
-    formData.append('image', uploadFile);
-
-    // High-Speed Unlimited Free Image Cloud CDN (ImgBB API)
-    const apiKey = '7d9e84bbaa599699b9053b415d84bd89';
-    const response = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
-      method: 'POST',
-      body: formData,
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      if (data.success && data.data?.url) {
-        return data.data.url; // Return fast, unlimited CDN URL
-      }
-      console.warn('Cloud CDN upload rejected by server, falling back to compressed base64:', data);
-    } else {
-      console.warn('Cloud CDN upload HTTP error, falling back to compressed base64:', response.status, await response.text().catch(() => ''));
-    }
+    // Firebase Storage (same project as the site's Firestore data) instead of a free
+    // third-party image host — imgbb's own reliability and speed are outside our control
+    // and have repeatedly degraded (and gone fully down) without any change on our side.
+    const { storage } = await import('../firebase');
+    const { ref, uploadBytes, getDownloadURL } = await import('firebase/storage');
+    const path = `uploads/${Date.now()}-${Math.random().toString(36).slice(2, 8)}-${file.name.replace(/[^a-zA-Z0-9._-]/g, '_')}`;
+    const storageRef = ref(storage, path);
+    await uploadBytes(storageRef, uploadFile, { contentType: uploadFile.type || file.type });
+    return await getDownloadURL(storageRef);
   } catch (err) {
-    console.warn('Cloud CDN upload network error, falling back to compressed base64:', err);
+    console.warn('Firebase Storage upload failed, falling back to compressed base64:', err);
   }
 
-  // Fallback if the CDN is unreachable (or its API key is invalid): compress conservatively
+  // Fallback if Storage is unreachable (or its rules reject the write): compress conservatively
   // and always re-encode as JPEG (forceJpeg), since PNG re-encoding is lossless and barely
   // shrinks a photo at all — a "700KB" source PNG could still balloon past 1MiB as base64.
   // This becomes a base64 string stored directly on the Firestore settings document, which
