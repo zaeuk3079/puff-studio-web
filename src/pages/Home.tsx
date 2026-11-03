@@ -439,23 +439,6 @@ export default function Home() {
         )}
       </div>
 
-      {/* About Snippet */}
-      {settings.showHomeAbout !== false && (
-        <section className="py-24 bg-ink-900 border-t border-white/5 mt-24">
-          <div className="max-w-4xl mx-auto px-4 text-center">
-            <h2 className="font-serif text-3xl md:text-4xl text-white mb-8 italic">The Studio</h2>
-            <p className="text-lg md:text-xl text-stone-400 leading-relaxed font-light">
-              {settings.aboutText}
-            </p>
-            <div className="mt-12">
-              <Link to="/about" className="text-lime-300 hover:text-lime-200 uppercase tracking-widest text-sm font-semibold border-b border-lime-300/40 pb-1 transition-colors">
-                Read Our Story
-              </Link>
-            </div>
-          </div>
-        </section>
-      )}
-
       {/* Lightbox Modal */}
       <AnimatePresence>
         {selectedItem && (
